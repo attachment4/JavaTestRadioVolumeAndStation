@@ -3,8 +3,17 @@ package ru.netology.qa;
 public class Radio {
     private int currentStation;
     private int currentVolume;
+    private int maxStation; // Новое поле для хранения количества станций
 
-    // комментарии созданы что бы просто не потеряться
+    // Конструктор по умолчанию (для 10 станций)
+    public Radio() {
+        this.maxStation = 9; // Индексы 0-9
+    }
+
+    // Конструктор с параметром (задаем количество станций)
+    public Radio(int stationsCount) {
+        this.maxStation = stationsCount - 1;
+    }
 
     public int getCurrentStation() {
         return currentStation;
@@ -14,10 +23,9 @@ public class Radio {
         return currentVolume;
     }
 
-    // комментарии созданы что бы просто не потеряться
-
     public void next() {
-        if (currentStation == 9) {
+        // Теперь сравниваем не с 9, а с maxStation
+        if (currentStation == maxStation) {
             currentStation = 0;
         } else {
             currentStation++;
@@ -25,23 +33,20 @@ public class Radio {
     }
 
     public void prev() {
+        // Если на нуле, переходим на самую последнюю станцию (maxStation)
         if (currentStation == 0) {
-            currentStation = 9;
+            currentStation = maxStation;
         } else {
             currentStation--;
         }
     }
 
-    // комментарии созданы что бы просто не потеряться
-
     public void setCurrentStation(int currentStation) {
-        if (currentStation < 0 || currentStation > 9) {
+        if (currentStation < 0 || currentStation > maxStation) {
             return;
         }
         this.currentStation = currentStation;
     }
-
-    // комментарии созданы что бы просто не потеряться
 
     public void increaseVolume() {
         if (currentVolume < 100) {
@@ -54,8 +59,6 @@ public class Radio {
             currentVolume--;
         }
     }
-
-    // комментарии созданы что бы просто не потеряться
 
     public void setCurrentVolume(int currentVolume) {
         if (currentVolume < 0 || currentVolume > 100) {
