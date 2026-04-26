@@ -6,6 +6,7 @@ public class RadioTest {
 
     @Test
     public void shouldSetStation() {
+
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         Assertions.assertEquals(5, radio.getCurrentStation());
@@ -107,5 +108,36 @@ public class RadioTest {
         radio.setCurrentVolume(50);
         radio.decreaseVolume();
         Assertions.assertEquals(49, radio.getCurrentVolume());
+    }
+    @Test
+    public void shouldInitWithCustomStationCount() {
+        // Создаем радио на 30 станций (индексы от 0 до 29)
+        Radio radio = new Radio(30);
+
+        radio.setCurrentStation(29);
+        Assertions.assertEquals(29, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldNextFromMaxStationToZero() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(29);
+        radio.next();
+        Assertions.assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldPrevFromZeroToMaxStation() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(0);
+        radio.prev();
+        Assertions.assertEquals(29, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldNotSetStationAboveCustomMax() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(30); // 30 нельзя, так как макс индекс 29
+        Assertions.assertEquals(0, radio.getCurrentStation());
     }
 }
